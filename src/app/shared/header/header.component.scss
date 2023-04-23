@@ -1,0 +1,37 @@
+.navbar-brand{
+    margin-top: 0px;
+   
+    // h3{
+    //     font-weight: bold;
+    //     margin-left: 1rem;
+    //     font-size: 1.1rem !important;
+    //     text-align: left;
+    //     font-family: fantasy;
+    //     color: deeppink;
+    // }
+    // .navbar_img{
+    //     width: 10vw;
+    //     height: 12vh;
+    //     border-radius: 7px;
+    //     background-size: cover;
+    //     background-image:url('../../../assets/images/guru3.jpg');
+    //     background-repeat: no-repeat;
+    // }
+}
+
+.navbar-brand{
+    img{
+        width: 10vw;
+        height: 10hw;
+    }
+}
+
+.nav-item{
+    margin: 1rem;
+}
+.nav-link{
+    background-color: beige;
+}
+.navbar{
+    background-color: beige;
+}
