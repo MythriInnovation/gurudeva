@@ -6,13 +6,11 @@ ngb-carousel {
 }
 .guruDevaContainer{
     display: flex;
-    .youthmovementDetails{
-        background-color: beige;
-        border: solid ;
-        width: 50vw;
-        border-radius: 5px;
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        font-weight: bolder;
+    justify-content: center;
+    margin-top: 15px;
+    .card{
+        margin: 5px;
+        height: 15rem;
+        max-width: 40rem !important;
     }
-
 }

@@ -12,6 +12,10 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { EventsComponent } from './components/events/events.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { DonateComponent } from './components/donate/donate.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,10 @@ import { DonateComponent } from './components/donate/donate.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    NgbCarouselModule
+    NgbCarouselModule,
+    MatButtonModule,
+    MatDividerModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

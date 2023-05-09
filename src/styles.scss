@@ -1,4 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@import "bootswatch/dist/united/variables";
+@import "bootstrap/scss/bootstrap";
+@import "bootswatch/dist/united/bootswatch";
+body{
+    font-family: 'Open Sans', sans-serif !important;
+}
+
 
 .form-control{
     border-radius: 5px !important;
@@ -7,3 +14,5 @@
 .btn-secondary{
     border-radius: 5px !important;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
