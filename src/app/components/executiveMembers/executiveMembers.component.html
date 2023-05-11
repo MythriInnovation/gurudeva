@@ -3,7 +3,7 @@
         <span style="font-weight: bold; font-size:xx-large;" class="text-success">Exceutive Members</span>
     </div>
 </div>
-    <div class="row" style="width: 90%;">
+    <div class="row text-center" style="width: 90%;">
         <div  *ngFor="let item of allMembers; let i = index;">
             <div *ngIf="i % 3 === 0" fxLayout="row">
                 <div class="col-4"  *ngIf="allMembers[i]">
@@ -48,7 +48,7 @@
                     </div>
                     
                 </div>
-                <div class="col-4"  *ngIf="allMembers[i+2]">
+                <div class="col-4" *ngIf="allMembers[i+2]">
                     <div class="member-container">
                         <div>
                             <div class="card-img">
@@ -57,13 +57,13 @@
                         </div>
                         <div class="details">
                             <div class="card-header">
-                                <h2>{{allMembers[i+2]?.designation}}</h2>
+                                <h2>{{allMembers[i+1]?.designation}}</h2>
                             </div>
                             <div class="card-body member-body">
-                                <h3>{{allMembers[i+2]?.firstName}} {{allMembers[i+2]?.lastName}}</h3>
+                                <h3>{{allMembers[i+1]?.firstName}} {{allMembers[i+1]?.lastName}}</h3>
                                 <h2 style="margin-bottom: 2px;">Residence Address</h2>
-                                <h5>{{allMembers[i+2].address}}</h5>
-                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i+2]?.phoneNumber}}</h5>
+                                <h5>{{allMembers[i+1].address}}</h5>
+                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i+1]?.phoneNumber}}</h5>
                             </div>
                         </div>
                     </div>

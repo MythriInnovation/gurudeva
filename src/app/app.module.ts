@@ -7,7 +7,6 @@ import { HeaderComponent } from './shared/header/header.component';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './components/home/home.component';
 import { ContactusComponent } from './components/contactus/contactus.component';
-import { AboutusComponent } from './components/aboutus/aboutus.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { EventsComponent } from './components/events/events.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
@@ -16,6 +15,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { ExecutiveMembersComponent } from './components/executiveMembers/executiveMembers.component';
+import { AllMembersComponent } from './components/all-members/all-members.component';
 
 @NgModule({
   declarations: [
@@ -23,11 +24,12 @@ import { MatDividerModule } from '@angular/material/divider';
     HeaderComponent,
     HomeComponent,
     ContactusComponent,
-    AboutusComponent,
+    ExecutiveMembersComponent,
     FooterComponent,
     EventsComponent,
     GalleryComponent,
-    DonateComponent
+    DonateComponent,
+    AllMembersComponent
   ],
   imports: [
     BrowserModule,

@@ -3,11 +3,11 @@ import { Observable } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-aboutus',
-  templateUrl: './aboutus.component.html',
-  styleUrls: ['./aboutus.component.scss']
+  selector: 'app-executiveMembers',
+  templateUrl: './executiveMembers.component.html',
+  styleUrls: ['./executiveMembers.component.scss']
 })
-export class AboutusComponent implements OnInit {
+export class ExecutiveMembersComponent implements OnInit {
   allMembers:any | undefined
   constructor(private userService:UserService){
     
