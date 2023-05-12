@@ -30,13 +30,14 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.scss",
-              "bootswatch/dist/united/bootstrap.min.css",
-              "font-awesome/css/font-awesome.css"
+              "font-awesome/css/font-awesome.css",
+              "bootstrap/scss/bootstrap.scss",
+              "bootstrap-icons/font/bootstrap-icons.css",
+              "bootswatch/dist/united/bootstrap.min.css"
             ],
             "scripts": [
-              "bootstrap/dist/js/bootstrap.min.js"
+              "bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {

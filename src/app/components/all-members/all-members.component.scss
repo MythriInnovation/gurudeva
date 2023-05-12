@@ -1,0 +1,27 @@
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .member {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+  
+  .member img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .member h2 {
+    margin-top: 0;
+  }
+  
+  .member p {
+    margin-bottom: 10px;
+  }
+  

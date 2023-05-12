@@ -17,7 +17,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { ExecutiveMembersComponent } from './components/executiveMembers/executiveMembers.component';
 import { AllMembersComponent } from './components/all-members/all-members.component';
-
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from  '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,10 +36,13 @@ import { AllMembersComponent } from './components/all-members/all-members.compon
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    HttpClientModule,
     NgbCarouselModule,
     MatButtonModule,
     MatDividerModule,
     FlexLayoutModule,
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
