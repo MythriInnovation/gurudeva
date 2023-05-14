@@ -7,8 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'gurudeva';
-
+  showLogin:boolean = false;
   constructor() {
+  }
+
+  enableLogin(event:any){
+    debugger;
+    this.showLogin = event;
   }
 
   // public open(modal: any): void {

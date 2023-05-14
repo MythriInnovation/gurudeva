@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './components/home/home.component';
 import { ContactusComponent } from './components/contactus/contactus.component';
 import { FooterComponent } from './shared/footer/footer.component';
@@ -19,6 +19,9 @@ import { ExecutiveMembersComponent } from './components/executiveMembers/executi
 import { AllMembersComponent } from './components/all-members/all-members.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from  '@angular/common/http';
+import { GurudevaPaginationComponent } from './shared/gurudeva-pagination/gurudeva-pagination.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,12 +33,16 @@ import { HttpClientModule } from  '@angular/common/http';
     EventsComponent,
     GalleryComponent,
     DonateComponent,
-    AllMembersComponent
+    AllMembersComponent,
+    GurudevaPaginationComponent,
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    NgbModalModule,
     HttpClientModule,
     NgbCarouselModule,
     MatButtonModule,

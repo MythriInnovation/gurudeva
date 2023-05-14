@@ -7,7 +7,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav me-auto">
+      <ul class="navbar-nav" style="margin-right: 22rem;">
         <li class="nav-item">
           <a class="nav-link" [routerLink]="'/home'">Home
             <span class="visually-hidden">(current)</span>
@@ -26,10 +26,21 @@
           <a class="nav-link" [routerLink]="'/contact'">Contact Us</a>
         </li>
       </ul>
-      <form class="d-flex">
+      <div class="m-3">
+        <!-- <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button> -->
+        <!-- <a  (click)="openLogin()" class="btn btn-secondary ml-2">Login</a> -->
+        <span><i class="bi-person-circle fs-1" style="color: white;" (click)="openLogin()"></i></span>
+      </div>
+      <!-- <form class="d-flex">
         <input class="form-control me-sm-2" type="search" placeholder="Search">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Login <i class="fas fa-sign-in-alt"></i></a>
+        </li>
+      </ul> -->
+    
     </div>
   </div>
 </nav>

@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
-import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { NgbCarousel, NgbModal, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
+import { LoginComponent } from 'src/app/components/login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -8,13 +9,13 @@ import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/n
 })
 export class HeaderComponent {
 
-  // public images:any[] = [
-  //   {img:'guru1.jpg'},
-  //   {img:'guru2.jpg'},
-  //   {img:'guru3.jpg'},
-  // ]
+  constructor(private modalService: NgbModal){
 
-
+  }
+  openLogin() {
+    debugger;
+    this.modalService.open(LoginComponent);
+  }
 
 
 

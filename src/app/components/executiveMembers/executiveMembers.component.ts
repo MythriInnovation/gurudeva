@@ -13,7 +13,9 @@ export class ExecutiveMembersComponent implements OnInit {
     
   }
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe(users=>{
+    debugger;
+    this.userService.getAdminUsers().subscribe(users=>{
+      debugger;
       this.allMembers = users;
     })
   }
