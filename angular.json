@@ -34,7 +34,8 @@
               "font-awesome/css/font-awesome.css",
               "bootstrap/scss/bootstrap.scss",
               "bootstrap-icons/font/bootstrap-icons.css",
-              "bootswatch/dist/united/bootstrap.min.css"
+              "bootswatch/dist/united/bootstrap.min.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "bootstrap/dist/js/bootstrap.bundle.min.js"
@@ -62,7 +63,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

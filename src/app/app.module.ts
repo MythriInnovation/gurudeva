@@ -17,11 +17,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { ExecutiveMembersComponent } from './components/executiveMembers/executiveMembers.component';
 import { AllMembersComponent } from './components/all-members/all-members.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from  '@angular/common/http';
 import { GurudevaPaginationComponent } from './shared/gurudeva-pagination/gurudeva-pagination.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { FirestoreModule, provideFirestore,getFirestore } from '@angular/fire/firestore'
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire/compat';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,8 +55,16 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     MatButtonModule,
     MatDividerModule,
     FlexLayoutModule,
+    BrowserAnimationsModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    FirestoreModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore())
   ],
   providers: [],
   bootstrap: [AppComponent]

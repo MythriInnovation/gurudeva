@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { NgbCarousel, NgbModal, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from 'src/app/components/login/login.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -9,12 +10,11 @@ import { LoginComponent } from 'src/app/components/login/login.component';
 })
 export class HeaderComponent {
 
-  constructor(private modalService: NgbModal){
+  constructor(private userService: UserService){
 
   }
   openLogin() {
-    debugger;
-    this.modalService.open(LoginComponent);
+    this.userService.openPage(LoginComponent);
   }
 
 

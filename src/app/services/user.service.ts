@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
+import { LoginComponent } from '../components/login/login.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
+  modalRef!: NgbModalRef;
   users = [
     {
       id:1,
@@ -81,6 +84,15 @@ export class UserService {
   ]
   getAllUsers():Observable<any>{
     return of(this.users);
+  }
+
+  openPage(content:any){
+    this.modalRef = this.modalService.open(content);
+  }
+  closePage(){
+    if (this.modalRef) {
+      this.modalRef.close();
+    }
   }
 
   getAdminUsers():Observable<any>{

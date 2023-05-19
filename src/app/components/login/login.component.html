@@ -1,22 +1,33 @@
 
-<div class="container-fluid">
+<div class="container-fluid" style="padding: 0px;">
     <div class="row justify-content-center align-items-center">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">
-            <h4 class="card-title text-center">Login</h4>
+          <div class="card-header text-center" style="max-width: 100%;">
+            <!-- <h4 class="card-title text-center">Login</h4> -->
+            <img class="card-img-top img-fluid" style="width: 20%;" src="assets/images/login.png" alt="Login">
           </div>
           <div class="card-body">
-            <form>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
               <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+                <label for="[]">Phone</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" 
+                formControlName="email"
+                required>
+                <div *ngIf="loginForm.get('email')?.invalid && loginForm?.get('email')?.touched" class="error-message">
+                  <div *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</div>
+                  <div *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format.</div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                <input type="password" class="form-control" 
+                formControlName="password" id="password" placeholder="Password" required>
+                <!-- <div *ngIf="loginForm.get('password')?.invalid || loginForm.get('password')?.touched">
+                    <div *ngIf="loginForm.get('password')?.hasError('required')">Password is required</div>
+                </div> -->
               </div>
-              <button type="submit" class="btn btn-primary btn-block">Login</button>
+              <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary btn-block">Login</button>
             </form>
           </div>
         </div>
