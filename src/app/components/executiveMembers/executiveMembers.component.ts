@@ -13,8 +13,7 @@ export class ExecutiveMembersComponent implements OnInit {
     
   }
   ngOnInit(): void {
-    debugger;
-    this.userService.getAdminUsers().subscribe(users=>{
+    this.userService.getAllUsers().subscribe(users=>{
       debugger;
       this.allMembers = users;
     })

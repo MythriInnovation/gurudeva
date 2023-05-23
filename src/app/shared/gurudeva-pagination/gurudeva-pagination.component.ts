@@ -13,7 +13,7 @@ export class GurudevaPaginationComponent {
   currentPage = 1;
 
   get totalPages(): number {
-    return Math.ceil(this.items.length / this.pageSize);
+    return Math.ceil(this.items?.length / this.pageSize);
   }
 
   get pages(): number[] {

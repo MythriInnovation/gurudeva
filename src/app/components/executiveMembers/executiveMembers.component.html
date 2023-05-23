@@ -10,7 +10,7 @@
                     <div class="member-container">
                         <div>
                             <div class="card-img">
-                                <img  src="assets/images/guru2.jpg" class="member-image"/>
+                                <img  [src]="allMembers[i]?.photoUrl" class="member-image"/>
                             </div>
                         </div>
                         <div class="details">
@@ -21,7 +21,7 @@
                                 <h3>{{allMembers[i]?.firstName}} {{allMembers[i]?.lastName}}</h3>
                                 <h2 style="margin-bottom: 2px;">Residence Address</h2>
                                 <h5>{{allMembers[i].address}}</h5>
-                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i]?.phoneNumber}}</h5>
+                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i]?.mobile}}</h5>
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                                 <h3>{{allMembers[i+1]?.firstName}} {{allMembers[i+1]?.lastName}}</h3>
                                 <h2 style="margin-bottom: 2px;">Residence Address</h2>
                                 <h5>{{allMembers[i+1].address}}</h5>
-                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i+1]?.phoneNumber}}</h5>
+                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i+1]?.mobile}}</h5>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                                 <h3>{{allMembers[i+2]?.firstName}} {{allMembers[2+1]?.lastName}}</h3>
                                 <h2 style="margin-bottom: 2px;">Residence Address</h2>
                                 <h5>{{allMembers[i+2].address}}</h5>
-                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i+2]?.phoneNumber}}</h5>
+                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i+2]?.mobile}}</h5>
                             </div>
                         </div>
                     </div>

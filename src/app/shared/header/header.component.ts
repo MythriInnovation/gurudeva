@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
-import { NgbCarousel, NgbModal, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { NgbCarousel, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from 'src/app/components/login/login.component';
+import { NotificationService } from 'src/app/services/notification.service';
+import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -8,17 +10,24 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
-
-  constructor(private userService: UserService){
-
+export class HeaderComponent implements OnInit {
+  isAdminUser:boolean = false;
+  constructor(private userService: UserService,
+    private notify:NotificationService,
+    private storage:StorageService){
   }
+  ngOnInit(): void {
+    this.userService.isAdmin$.subscribe(x=>{
+      this.isAdminUser = x;
+    })
+  }
+
   openLogin() {
     this.userService.openPage(LoginComponent);
   }
-
-
-
-
+  signOut(){
+    this.userService.signOut();
+    this.notify.showError("Logged out Successfully");
+  }
 }
 

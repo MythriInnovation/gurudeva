@@ -15,17 +15,33 @@
                 formControlName="email"
                 required>
                 <div *ngIf="loginForm.get('email')?.invalid && loginForm?.get('email')?.touched" class="error-message">
-                  <div *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</div>
-                  <div *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format.</div>
+                  <div *ngIf="loginForm.get('email')?.hasError('required')" class="text-danger">Email is required.</div>
+                  <div *ngIf="loginForm.get('email')?.hasError('email')" class="text-danger">Invalid email format.</div>
                 </div>
               </div>
               <div class="form-group">
-                <label for="password">Password</label>
+                <!-- <label for="password">Password</label>
                 <input type="password" class="form-control" 
-                formControlName="password" id="password" placeholder="Password" required>
+                formControlName="password" id="password" placeholder="Password" required> -->
                 <!-- <div *ngIf="loginForm.get('password')?.invalid || loginForm.get('password')?.touched">
                     <div *ngIf="loginForm.get('password')?.hasError('required')">Password is required</div>
                 </div> -->
+                <div class="input-group">
+                  <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" 
+                  formControlName="password"
+                   placeholder="password" required>
+                   
+                  <div class="input-group-append">
+                    <span class="input-group-text" (click)="togglePasswordVisibility()">
+                      <i [ngClass]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                    </span>
+                  </div>
+                  
+                </div>
+                <div class="text-danger" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                  <div class="text-danger" *ngIf="loginForm.get('password')?.hasError('required')">Password is required</div>
+                  <div class="text-danger" *ngIf="loginForm.get('password')?.hasError('minlength')">Password must have minimum of six characters</div>
+              </div>
               </div>
               <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary btn-block">Login</button>
             </form>
