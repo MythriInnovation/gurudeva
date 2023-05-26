@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbCarousel, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -14,7 +15,8 @@ export class HeaderComponent implements OnInit {
   isAdminUser:boolean = false;
   constructor(private userService: UserService,
     private notify:NotificationService,
-    private storage:StorageService){
+    private storage:StorageService,
+    private route:Router){
   }
   ngOnInit(): void {
     this.userService.isAdmin$.subscribe(x=>{
@@ -28,6 +30,7 @@ export class HeaderComponent implements OnInit {
   signOut(){
     this.userService.signOut();
     this.notify.showError("Logged out Successfully");
+    this.route.navigate(['/home']);
   }
 }
 

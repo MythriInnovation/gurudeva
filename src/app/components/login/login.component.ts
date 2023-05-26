@@ -9,6 +9,8 @@ import { map } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
+import { RecaptchaVerifier } from 'firebase/auth';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,11 +20,11 @@ export class LoginComponent implements OnInit {
   loginForm!:FormGroup;
   password: string = '';
   showPassword: boolean = false;
-
+  recaptchaVerifier!: RecaptchaVerifier;
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
-  
+
   constructor(
       private fauth:AngularFireAuth,
       private userService:UserService,
@@ -45,7 +47,8 @@ export class LoginComponent implements OnInit {
     let password = this.loginForm.get('password')?.value;
     this.fauth.signInWithEmailAndPassword(email,password).then((data:any)=>{
       debugger;
-      this.userService.updateAdminUser(data.user);
+      this.storage.AddUserToStorage(data.user);
+      this.userService.checkAdminUser(data.user);
       this.notify.showSuccess("Logged in Successfully");
       this.userService.closePage();
       this.router.navigate(['/home']);

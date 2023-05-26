@@ -5,16 +5,16 @@ import { BehaviorSubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { StorageService } from './storage.service';
-
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
   private isAdminUser$:BehaviorSubject<boolean>  = new BehaviorSubject<boolean>(false);
-
-  constructor(private modalService: NgbModal
-    ,private fireStore:AngularFirestore,
+  constructor(private modalService: NgbModal,
+    public fireStorage:AngularFireStorage,
+    private fireStore:AngularFirestore,
     private  auth:AngularFireAuth,
     private storage:StorageService
     ) { }
@@ -108,7 +108,7 @@ export class UserService {
     const curUser = this.storage.getCurrentUserFromStorage();
     if(!!curUser){
       debugger;
-      this.updateAdminUser(curUser);
+      this.checkAdminUser(curUser);
     }
     else{
       this.storage.removeSessionValues();
@@ -117,12 +117,20 @@ export class UserService {
 
   public isAdmin$ = this.isAdminUser$.asObservable();
 
-  updateAdminUser(user:any){
+  checkAdminUser(user:any){
     this.getAllUserRoles().pipe(
-      map(y=>y.filter((data:any)=>data.roleId === 2)),
+      map(y=>y.filter((data:any)=>data.userId == user.uid && data.roleId === 2)),
     ).subscribe(x=>{
-      this.isAdminUser$.next(x);
+      this.isAdminUser$.next(true);
     })
+  }
+
+  uploadProfileImage(imageFile:any,userId:any){
+    const filePath = 'users';
+    const storageRef = this.fireStorage.ref(filePath);
+    const imageRef = storageRef.child('users/' + userId + '/profile.jpg');
+    const task = imageRef.put(imageFile);
+    return task.snapshotChanges;
   }
 
   openPage(content:any){
@@ -138,6 +146,8 @@ export class UserService {
     this.storage.removeSessionValues();
     this.isAdminUser$.next(false);
   }
+
+  
 
   // getAdminUsers():Observable<any>{
   //   return of(this.users.filter(x=>x.role ==='admin'));
