@@ -18,10 +18,10 @@ export class AppComponent  implements OnInit{
     this.userService.getAllRoles().subscribe(roles=>{
       this.storage.AddRolesToStorage(roles);
     });
-    this.userService.getAllUserRoles().subscribe(userRoles=>{
-      this.storage.AddUserRolesToStorage(userRoles);
-    });
-    debugger;
+
+    // this.userService.getAllUserRoles().subscribe(userRoles=>{
+    //   this.storage.AddUserRolesToStorage(userRoles);
+    // });
     this.userService.getCurrentUser();
 
     // const curUser = this.storage.getCurrentUserFromStorage();

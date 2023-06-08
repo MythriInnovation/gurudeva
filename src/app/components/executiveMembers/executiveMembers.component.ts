@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,7 +13,8 @@ export class ExecutiveMembersComponent implements OnInit {
     
   }
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe(users=>{
+    this.userService.getAllUsers()
+    .subscribe(users=>{
       debugger;
       this.allMembers = users;
     })

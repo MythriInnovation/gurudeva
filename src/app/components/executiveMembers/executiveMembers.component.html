@@ -9,19 +9,24 @@
                 <div class="col-4"  *ngIf="allMembers[i]">
                     <div class="member-container">
                         <div>
-                            <div class="card-img">
-                                <img  [src]="allMembers[i]?.photoUrl" class="member-image"/>
+                            <div class="card-img" *ngIf="allMembers[i].imageUrl | async as url ; else user">
+                                <img  [src]="url" class="member-image"/>
                             </div>
+                            <ng-template #user>
+                                <span>
+                                  <i class="bi bi-person large-icon member-image"></i>
+                                </span>
+                              </ng-template>
                         </div>
                         <div class="details">
                             <div class="card-header">
-                                <h2>{{allMembers[i]?.designation}}</h2>
+                                <h2>{{allMembers[i]?.data.designation}}</h2>
                             </div>
                             <div class="card-body member-body">
-                                <h3>{{allMembers[i]?.firstName}} {{allMembers[i]?.lastName}}</h3>
+                                <h3>{{allMembers[i]?.data.firstName}} {{allMembers[i]?.data.lastName}}</h3>
                                 <h2 style="margin-bottom: 2px;">Residence Address</h2>
-                                <h5>{{allMembers[i].address}}</h5>
-                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i]?.mobile}}</h5>
+                                <h5>{{allMembers[i].data.address}}</h5>
+                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i]?.data.mobile}}</h5>
                             </div>
                         </div>
                     </div>
@@ -30,19 +35,24 @@
                 <div class="col-4" *ngIf="allMembers[i+1]">
                     <div class="member-container">
                         <div>
-                            <div class="card-img">
-                                <img  src="assets/images/guru2.jpg" class="member-image"/>
+                            <div class="card-img" *ngIf="allMembers[i+1].imageUrl | async as url ; else user">
+                                <img  [src]="url" class="member-image"/>
                             </div>
+                            <ng-template #user>
+                                <span>
+                                  <i class="bi bi-person large-icon member-image"></i>
+                                </span>
+                              </ng-template>
                         </div>
                         <div class="details">
                             <div class="card-header">
-                                <h2>{{allMembers[i+1]?.designation}}</h2>
+                                <h2>{{allMembers[i+1]?.data.designation}}</h2>
                             </div>
                             <div class="card-body member-body">
-                                <h3>{{allMembers[i+1]?.firstName}} {{allMembers[i+1]?.lastName}}</h3>
+                                <h3>{{allMembers[i+1]?.data.firstName}} {{allMembers[i+1]?.data.lastName}}</h3>
                                 <h2 style="margin-bottom: 2px;">Residence Address</h2>
-                                <h5>{{allMembers[i+1].address}}</h5>
-                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i+1]?.mobile}}</h5>
+                                <h5>{{allMembers[i+1].data.address}}</h5>
+                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i+1]?.data.mobile}}</h5>
                             </div>
                         </div>
                     </div>
@@ -51,19 +61,24 @@
                 <div class="col-4" *ngIf="allMembers[i+2]">
                     <div class="member-container">
                         <div>
-                            <div class="card-img">
-                                <img  src="assets/images/guru2.jpg" class="member-image"/>
+                            <div class="card-img" *ngIf="allMembers[i+2].imageUrl | async as url ; else user">
+                                <img  [src]="url" class="member-image"/>
                             </div>
+                            <ng-template #user>
+                                <span>
+                                  <i class="bi bi-person large-icon member-image"></i>
+                                </span>
+                              </ng-template>
                         </div>
                         <div class="details">
                             <div class="card-header">
-                                <h2>{{allMembers[i+2]?.designation}}</h2>
+                                <h2>{{allMembers[i+2]?.data.designation}}</h2>
                             </div>
                             <div class="card-body member-body">
-                                <h3>{{allMembers[i+2]?.firstName}} {{allMembers[2+1]?.lastName}}</h3>
+                                <h3>{{allMembers[i+2]?.data.firstName}} {{allMembers[2+1]?.data.lastName}}</h3>
                                 <h2 style="margin-bottom: 2px;">Residence Address</h2>
-                                <h5>{{allMembers[i+2].address}}</h5>
-                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i+2]?.mobile}}</h5>
+                                <h5>{{allMembers[i+2].data.address}}</h5>
+                                <h5><i class="fa fa-mobile fa-border"></i> {{allMembers[i+2]?.data.mobile}}</h5>
                             </div>
                         </div>
                     </div>

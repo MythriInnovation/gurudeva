@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   }
   ngOnInit(): void {
     this.userService.isAdmin$.subscribe(x=>{
+      debugger
       this.isAdminUser = x;
     })
   }

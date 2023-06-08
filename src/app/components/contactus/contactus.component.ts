@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification.service';
 import {ToastrService} from 'ngx-toastr'
-import { UserService } from 'src/app/services/user.service';
+import { MailService } from 'src/app/services/mail.service';
 @Component({
   selector: 'app-contactus',
   templateUrl: './contactus.component.html',
@@ -13,7 +13,7 @@ export class ContactusComponent implements OnInit {
   email!: string;
   message!: string;
 
-  constructor(private notify:NotificationService){
+  constructor(private notify:NotificationService,private mail:MailService){
 
   }
 
@@ -21,9 +21,13 @@ export class ContactusComponent implements OnInit {
   }
 
   onSubmit() {
+    debugger;
+    this.mail.sendEmail('sd','sdfd','sdfdsf');
     this.notify.showSuccess('Thank you, We have received your message.')
     this.name = '';
     this.email = '';
     this.message = '';
   }
+
+  
 }

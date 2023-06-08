@@ -11,21 +11,29 @@ export class AllMembersComponent implements OnInit {
   members!:any[];
   currentPage = 1;
   pageSize = 5;
-  constructor(private userService: UserService){
+  constructor(public userService: UserService){
 
   }
   ngOnInit(): void {
     this.getAllMembers();
+    // this.getProfileImage('mqmR8Z81aLYhC8m7bsM35X2EirJ2').subscribe(x=>{
+    //   debugger;
+    //   console.log(x);
+    // })
+  }
+
+  getProfileImage(userId:any){
+    return this.userService.getImageByUserId(userId)
   }
 
   getAllMembers() {
     this.userService.getAllUsers().subscribe(users=>{
       this.members = users;
     })
+    // this.userService.getImageByUserId
   }
 
   setPage(event:any){
       this.currentPage=event;
   }
-
 }

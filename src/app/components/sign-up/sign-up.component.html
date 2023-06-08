@@ -24,9 +24,11 @@
               </div>
               <div class="form-group">
                 <label for="role">Role:</label>
-                <select class="form-select">
-                  <option value="">Select an option</option>
-                  <option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</option>
+                <select class="form-select" formControlName="role" 
+                *ngIf="collectionData$ | async as roles"
+                >
+                  <option value="0">Select an option</option>
+                  <option *ngFor="let role of roles" [value]="role.roleId">{{ role.data.name }}</option>
                 </select>
               </div>
             </div>
@@ -46,7 +48,9 @@
               </div>
               <div class="form-group">
                 <label for="photoUrl">Photo:</label>
-                <input type="file" formControlName="photoUrl" class="form-control" id="photoUrl" placeholder="Enter your photo">
+                <input type="file" formControlName="photoUrl" 
+                (change)="selectImage($event)"
+                class="form-control" id="photoUrl" placeholder="Enter your photo">
               </div>
               <div class="form-group">
                 <label for="address">Address:</label>

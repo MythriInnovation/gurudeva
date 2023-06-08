@@ -6,6 +6,14 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { StorageService } from './storage.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+
+
+export class Role
+{
+  id:string | undefined;
+  name:string | undefined;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,6 +27,8 @@ export class UserService {
     private storage:StorageService
     ) { }
   modalRef!: NgbModalRef;
+  storagePath:string = "user-profiles";
+  
   // users = [
   //   {
   //     id:1,
@@ -92,22 +102,76 @@ export class UserService {
   //   }
   // ]
   getAllUsers():Observable<any>{
-    return this.fireStore.collection('users').valueChanges();
+    return this.fireStore.collection('users').snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          const imageUrl = this.getImageByUserId(id);
+          return { id, data,imageUrl };
+        });
+      }));
   }
 
-  getAllRoles():Observable<any>{
-    return this.fireStore.collection('roles').valueChanges();
+  // getAdminUsers():Observable<any>{
+  //   return this.fireStore.collection('users').snapshotChanges().pipe(
+  //     map(actions => {
+  //       return actions.map(a => {
+  //         const data = a.payload.doc.data()
+  //         const id = a.payload.doc.id;
+  //         const imageUrl = this.getImageByUserId(id);
+  //         return { id, data,imageUrl };
+  //       })
+  //     }));
+  // }
+
+  getImageByUserId(userId:any):Observable<any>{
+    const filePath = `${this.storagePath}/${userId}`;
+    return this.fireStorage.ref(filePath).getDownloadURL();
   }
 
-  getAllUserRoles():Observable<any>{
-    return this.fireStore.collection('userRoles').valueChanges();
+  getAllUserRoles(userId:any):Observable<any>{
+    return this.fireStore.collection('userRoles').snapshotChanges().pipe(
+      map(actions=>{
+        return actions.filter(x=>
+          x.payload.doc.id == userId
+        )
+      }),
+      map(x=>{
+       return  x.map(y=>
+        {
+          const id = y.payload.doc.id;
+          const data = y.payload.doc.data();
+          return {id:id,data:data}
+        })
+        })
+      )
+  }
+
+  getAllRoles() {
+    let collectionRef = this.fireStore.collection<any>('roles');
+    return  collectionRef.snapshotChanges().pipe(
+      map(actions=>actions.map(x=>{
+        const roleId = x.payload.doc.id;
+        const data = x.payload.doc.data();
+        return {roleId:roleId,data:data}
+      }))
+    );
+  }
+
+  checkAdminUser(user:any){
+    this.getAllUserRoles(user.uid).subscribe(x=>{
+      const roles = this.storage.getRolesFromStorage();
+      const adminRoleId = roles?.filter((x:any)=>x.data.name === 'admin')[0]?.roleId;
+      if(x.length >=0 && adminRoleId === x[0]?.data.roleId){
+        this.isAdminUser$.next(true);
+      }
+    })
   }
 
   getCurrentUser(): void {
-
     const curUser = this.storage.getCurrentUserFromStorage();
     if(!!curUser){
-      debugger;
       this.checkAdminUser(curUser);
     }
     else{
@@ -116,14 +180,6 @@ export class UserService {
   }
 
   public isAdmin$ = this.isAdminUser$.asObservable();
-
-  checkAdminUser(user:any){
-    this.getAllUserRoles().pipe(
-      map(y=>y.filter((data:any)=>data.userId == user.uid && data.roleId === 2)),
-    ).subscribe(x=>{
-      this.isAdminUser$.next(true);
-    })
-  }
 
   uploadProfileImage(imageFile:any,userId:any){
     const filePath = 'users';
@@ -146,10 +202,4 @@ export class UserService {
     this.storage.removeSessionValues();
     this.isAdminUser$.next(false);
   }
-
-  
-
-  // getAdminUsers():Observable<any>{
-  //   return of(this.users.filter(x=>x.role ==='admin'));
-  // }
 }
