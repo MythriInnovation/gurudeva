@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, filter, map, of, tap } from 'rxjs';
+import { Observable, filter, flatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -113,6 +113,40 @@ export class UserService {
       }));
   }
 
+  getAllUsersWithRoles():Observable<any>{
+    return this.fireStore.collection('users').snapshotChanges().pipe(
+       flatMap(actions=>{
+          return actions.map((a:any)=>{
+          const id=a.payload.doc.id;
+          const data=a.payload.doc.data();
+          const userRoles = this.getAllUserRoles(id);
+          const roles = this.storage.getRolesFromStorage();
+          const adminRoleId = roles?.filter((x:any)=>x.data.name === 'admin')[0]?.roleId;
+          return {
+            id,adminRoleId,userRoles,data
+          };
+        })
+      }),
+      flatMap((next:any)  =>{
+        const userId = next.id
+        const adminRoleId = next.adminRoleId;
+        const userData = next.data;
+        const usrInfo =  next.userRoles.pipe(
+          map((x:any)=>{
+            const isAdmin = (x.length > 0 && x[0].data.roleId === adminRoleId);
+            const imageUrl = this.getImageByUserId(userId);
+            const data = {
+              userId,imageUrl,userData,isAdmin
+            } 
+            return data;
+          })
+        )
+        return usrInfo;
+      }),
+    )
+  }
+
+
   // getAdminUsers():Observable<any>{
   //   return this.fireStore.collection('users').snapshotChanges().pipe(
   //     map(actions => {
@@ -167,6 +201,34 @@ export class UserService {
         this.isAdminUser$.next(true);
       }
     })
+  }
+
+  isAdminUser(user:any){
+    this.getAllUserRoles(user.uid).pipe
+    (map(x=>{
+      const roles = this.storage.getRolesFromStorage();
+      const adminRoleId = roles?.filter((x:any)=>x.data.name === 'admin')[0]?.roleId;
+      return (x.length >=0 && adminRoleId === x[0]?.data.roleId)
+      
+    }))
+  }
+
+  getAllAdminUsers():Observable<any>{
+    return this.getAllUsers().pipe(
+      mergeMap((user:any)=>{
+        debugger
+        return this.getAllUserRoles(user.id).pipe(
+          map((y:any)=>{
+            const roles = this.storage.getRolesFromStorage();
+            const adminRoleId = roles?.
+                  filter((x:any)=>x.data.name === 'admin')[0]?.
+                  roleId;
+            return (y.length >0 && y[0].
+                  data.roleId === adminRoleId); 
+          }),
+        )
+      })
+    )
   }
 
   getCurrentUser(): void {
