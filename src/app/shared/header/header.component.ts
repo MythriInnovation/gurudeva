@@ -1,7 +1,9 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgbCarousel, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from 'src/app/components/login/login.component';
+import { SignUpComponent } from 'src/app/components/sign-up/sign-up.component';
 import { NotificationService } from 'src/app/services/notification.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
@@ -16,11 +18,11 @@ export class HeaderComponent implements OnInit {
   constructor(private userService: UserService,
     private notify:NotificationService,
     private storage:StorageService,
+    
     private route:Router){
   }
   ngOnInit(): void {
     this.userService.isAdmin$.subscribe(x=>{
-      debugger
       this.isAdminUser = x;
     })
   }
@@ -28,6 +30,8 @@ export class HeaderComponent implements OnInit {
   openLogin() {
     this.userService.openPage(LoginComponent);
   }
+
+
   signOut(){
     this.userService.signOut();
     this.notify.showError("Logged out Successfully");

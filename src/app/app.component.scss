@@ -1,0 +1,9 @@
+    ::ng-deep .mat-mdc-dialog-container {
+        position: fixed !important;
+        display: flex !important;
+        // margin-top: 78px;
+    }
+
+    ::ng-deep .mat-mdc-dialog-container .mdc-dialog__container {
+        margin-top: 50px;
+    }

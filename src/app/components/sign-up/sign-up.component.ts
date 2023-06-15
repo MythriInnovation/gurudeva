@@ -9,13 +9,14 @@ addDoc,
 
 }
 from '@angular/fire/firestore'
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
-
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,7 +28,9 @@ export class SignUpComponent implements OnInit {
   signUpForm:any;
   roles:any;
   collectionData$:Observable<any> | undefined;
-  constructor( private fauth:AngularFireAuth, 
+  mobileNumberRegx = '/^[6-9]\d{9}$/'
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+    private fauth:AngularFireAuth, 
     private fireStore:AngularFirestore,
     private notify:NotificationService,
     private fireStorage:AngularFireStorage,
@@ -37,26 +40,33 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    debugger;
     this.collectionData$ = this.userService.getAllRoles();
     this.selectedFile = undefined;
     this.roles=this.storage.getRolesFromStorage();
-    debugger;
     this.signUpForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      mobile: ['', [Validators.required]],
+      mobile: ['', [Validators.required,Validators.pattern(/^[6-9]\d{9}$/)]],
       designation: [''],
       firstName: ['', [Validators.required]],
-      lastName: [''],
+      lastName: ['',[Validators.required]],
       photoUrl: [''],
-      role: ['0',[Validators.required]],
-      address: [''],
-    });
+      role: ['0',[this.requiredSelectValidator()]],
+      address: ['',[Validators.required]],
+    },{ validator: this.passwordMatchValidator()});
+  }
+
+  get allFormControls(){
+    return this.signUpForm.controls;
+  }
+
+  closeSignUp(event:any){
+    this.userService.closeDialog$.next(true);
   }
 
   onSubmit(){
-debugger;
     const rolevalue = this.signUpForm.get('role').value;
     let email = this.signUpForm.get('email').value;
     let password = this.signUpForm.get('password').value;
@@ -100,12 +110,41 @@ debugger;
 
   uploadImage(userId:any){
     const filePath = `user-profiles/${userId}`;
+    
     const task =  this.fireStorage.upload(filePath, this.selectedFile)
       .then(()=>{
         this.notify.showSuccess('Registration completed successfully.');
     }).catch(err=>{
       this.notify.showError(err.message);
     });
+  }
+
+  requiredSelectValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const selectedValue = control.value;
+      
+      // Check if the selected value is empty or null
+      if (!selectedValue || selectedValue === '0') {
+        return { 'required': true };
+      }
+      
+      return null; // Return null if the value is valid
+    };
+  }
+
+  passwordMatchValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const password = control.get('password');
+      const confirmPassword = control.get('confirmPassword');  
+      // Check if both password and confirm password controls have values
+      if (password && confirmPassword &&
+        password.value && confirmPassword.value && password.value !== confirmPassword.value) {
+        // Return an error object with a 'passwordMismatch' key
+        return { 'passwordMismatch': true };
+      }
+  
+      return null; // Return null if passwords match
+    };
   }
 
 

@@ -31,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     NgbCarouselModule,
     MatButtonModule,
     MatDividerModule,
+    MatDialogModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
     NgbModule,

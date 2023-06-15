@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, filter, flatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { Observable, Subject, filter, flatMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { StorageService } from './storage.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SignUpComponent } from '../components/sign-up/sign-up.component';
 
 
 export class Role
@@ -20,87 +22,19 @@ export class Role
 export class UserService {
 
   private isAdminUser$:BehaviorSubject<boolean>  = new BehaviorSubject<boolean>(false);
+  public openDialog$:BehaviorSubject<any>  = new BehaviorSubject<any>(undefined);
+  public closeDialog$:BehaviorSubject<boolean>  = new BehaviorSubject<boolean>(false);
   constructor(private modalService: NgbModal,
+    private dialog: MatDialog,
     public fireStorage:AngularFireStorage,
     private fireStore:AngularFirestore,
     private  auth:AngularFireAuth,
     private storage:StorageService
-    ) { }
+   ) { }
   modalRef!: NgbModalRef;
+ 
   storagePath:string = "user-profiles";
-  
-  // users = [
-  //   {
-  //     id:1,
-  //     firstName:"Adv.Krishnan",
-  //     lastName:"S Raj",
-  //     designation:"President",
-  //     address:"Address 1",
-  //     role:"admin",
-  //     phoneNumber:"93434334342",
-  //     image:'assets/images/guru.jpg'
-  //   },
-  //   {
-  //     id:2,
-  //     firstName:"Hirankumar",
-  //     lastName:"A",
-  //     designation:"Secratary",
-  //     address:"Address 2",
-  //     role:"admin",
-  //     phoneNumber:"9497776923",
-  //     image:'assets/images/guru.jpg'
-  //   },
-  //   {
-  //     id:3,
-  //     firstName:"Jayan",
-  //     lastName:"A",
-  //     designation:"Vice President",
-  //     address:"Address 3",
-  //     role:"admin",
-  //     phoneNumber:"94977236923",
-  //     image:'assets/images/guru.jpg'
-  //   },
-  //   {
-  //     id:4,
-  //     firstName:"Ajith",
-  //     lastName:"A",
-  //     designation:"Joint Secretary",
-  //     address:"Address 4",
-  //     role:"admin",
-  //     phoneNumber:"94973236923",
-  //     image:'assets/images/guru.jpg'
-  //   },
-  //   {
-  //     id:5,
-  //     firstName:"Adithyan",
-  //     lastName:"CS",
-  //     designation:"Treasurer",
-  //     address:"Address 5",
-  //     role:"admin",
-  //     phoneNumber:"94973236923",
-  //     image:'assets/images/guru.jpg'
-  //   },
-  //   {
-  //     id:6,
-  //     firstName:"BabuRaj",
-  //     lastName:"A",
-  //     designation:"",
-  //     address:"Address 6",
-  //     role:"user",
-  //     phoneNumber:"94573236923",
-  //     image:'assets/images/guru.jpg'
-  //   },
-  //   {
-  //     id:7,
-  //     firstName:"Vishnu",
-  //     lastName:"A",
-  //     designation:"",
-  //     address:"Address 7",
-  //     role:"user",
-  //     phoneNumber:"94574236923",
-  //     image:'assets/images/guru.jpg'
-  //   }
-  // ]
+
   getAllUsers():Observable<any>{
     return this.fireStore.collection('users').snapshotChanges().pipe(
       map(actions => {
@@ -145,19 +79,20 @@ export class UserService {
       }),
     )
   }
-
-
-  // getAdminUsers():Observable<any>{
-  //   return this.fireStore.collection('users').snapshotChanges().pipe(
-  //     map(actions => {
-  //       return actions.map(a => {
-  //         const data = a.payload.doc.data()
-  //         const id = a.payload.doc.id;
-  //         const imageUrl = this.getImageByUserId(id);
-  //         return { id, data,imageUrl };
-  //       })
-  //     }));
-  // }
+  openDialog(data:any): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '1200px';
+    dialogConfig.height = '300px';
+    dialogConfig.position = { top: '50%', left: '50%' };
+    dialogConfig.hasBackdrop = true;
+    dialogConfig.data = data;
+    dialogConfig.backdropClass = 'my-dialog';
+    const dialogRef = this.dialog.open(SignUpComponent,dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog result:', result);
+    });
+  }
 
   getImageByUserId(userId:any):Observable<any>{
     const filePath = `${this.storagePath}/${userId}`;

@@ -1,26 +1,50 @@
-<div class="container-fluid mt-2 p-5">
+<div class="container-fluid ">
+  <div class="row mt-3 mr-2 mb-2" style="justify-content: end;">
+    <button type="button" class="btn-close" (click)="closeSignUp($event)" aria-label="Close"></button>
+  </div>
+  
   <div class="row">
     <div>
       <div class="registration-form">
         <h2>Registration</h2>
+        
         <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
           <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxFlexFill fxLayoutAlign="center">
             <div class="col1">
               <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter email">
+                <div *ngIf="allFormControls?.email?.invalid && allFormControls?.email?.touched" class="error-message">
+                  <div *ngIf="allFormControls.email?.errors.required" class="text-danger">Email is required.</div>
+                  <div *ngIf="allFormControls.email?.errors.email" class="text-danger">Invalid email format.</div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" formControlName="password" class="form-control" id="password" placeholder="Enter password">
+                <div *ngIf="allFormControls.password?.invalid && allFormControls?.password?.touched" class="error-message">
+                  <div *ngIf="allFormControls.password?.errors.required" class="text-danger">Password is required.</div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="confirmPassword">Confirm Password:</label>
                 <input type="password" formControlName="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm password">
+                <div *ngIf="allFormControls.confirmPassword?.invalid && allFormControls.confirmPassword?.touched" class="error-message">
+                  <div *ngIf="allFormControls.confirmPassword?.errorsrequired" class="text-danger">Confirm Password is required.</div>
+                </div>
+                <div *ngIf="signUpForm.hasError('passwordMismatch')" class="text-danger">
+                  Passwords do not match.
+                </div>
               </div>
               <div class="form-group">
                 <label for="mobile">Mobile:</label>
-                <input type="text" formControlName="mobile" class="form-control" id="mobile" placeholder="Mobile">
+                <input type="text" formControlName="mobile" 
+                mask="0000000000" placeholder="9999999999" class="form-control" id="mobile" 
+                >
+                <div *ngIf="signUpForm.get('mobile')?.invalid && signUpForm?.get('mobile')?.touched" class="error-message">
+                  <div *ngIf="signUpForm.get('mobile')?.hasError('required')" class="text-danger">Mobile is required.</div>
+                  <div *ngIf="signUpForm.get('mobile').errors?.pattern" class="text-danger">Mobile Number must be in the format (6-9)123456789.</div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="role">Role:</label>
@@ -30,21 +54,31 @@
                   <option value="0">Select an option</option>
                   <option *ngFor="let role of roles" [value]="role.roleId">{{ role.data.name }}</option>
                 </select>
+                <div *ngIf="signUpForm.get('role')?.invalid && signUpForm?.get('role')?.touched" class="error-message">
+                  <div *ngIf="signUpForm.get('role')?.hasError('required')" class="text-danger">Role is required.</div>
+                </div>
               </div>
             </div>
             <div class="col2">
               <div class="form-group">
                 <label for="designation">Designation:</label>
                 <input type="text" formControlName="designation" class="form-control" id="designation" placeholder="Enter Designation">
+                
               </div>
               
               <div class="form-group">
                 <label for="firstName">FirstName:</label>
                 <input type="firstName" formControlName="firstName" class="form-control" id="firstName" placeholder="Enter FirstName">
+                <div *ngIf="signUpForm.get('firstName')?.invalid && signUpForm?.get('firstName')?.touched" class="error-message">
+                  <div *ngIf="signUpForm.get('firstName')?.hasError('required')" class="text-danger">FirstName is required.</div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="lastName">LastName:</label>
                 <input type="lastName"  formControlName="lastName" class="form-control" id="lastName" placeholder="Enter LastName">
+                <div *ngIf="signUpForm.get('lastName')?.invalid && signUpForm?.get('lastName')?.touched" class="error-message">
+                  <div *ngIf="signUpForm.get('lastName')?.hasError('required')" class="text-danger">LastName is required.</div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="photoUrl">Photo:</label>
@@ -55,6 +89,9 @@
               <div class="form-group">
                 <label for="address">Address:</label>
                 <textarea type="text" formControlName="address" class="form-control" id="address" placeholder="Enter Address"></textarea>
+                <div *ngIf="signUpForm.get('address')?.invalid && signUpForm?.get('address')?.touched" class="error-message">
+                  <div *ngIf="signUpForm.get('address')?.hasError('required')" class="text-danger">Address is required.</div>
+                </div>
               </div>
               
             </div>
@@ -63,7 +100,7 @@
             <label for="address">Address:</label>
             <textarea type="text" formControlName="address" class="form-control" id="address" placeholder="Enter Address"></textarea>
           </div> -->
-          <button type="submit" class="btn btn-primary btn-block">Register</button>
+          <button type="submit" [disabled]="signUpForm.invalid" class="btn btn-primary btn-block">Register</button>
         </form>
       </div>
     </div>

@@ -5,11 +5,24 @@
     style="border: 2px solid lightgrey;" class="mb-2">
       <div  class="profile-container"
          *ngIf="member.imageUrl | async as url ; else user"> 
-            <img [src]="url" class="profile-image card-img">
+         <div class="row">
+          <img [src]="url" class="profile-image card-img" 
+          [ngStyle]="!!isAdminUser ? {'height': '114px;'}:{'height': '150px;'}"
+          />
+         </div>
+           <div class="row" *ngIf="!!isAdminUser">
+            <button class="btn btn-primary btn-small" (click)="editUser(member)">Edit</button>
+           </div>
       </div>
       <ng-template #user>
-        <span class="profile-container">
-          <i class="bi bi-person large-icon profile-image"></i>
+        <span class="profile-container text-center">
+          <div class="row">
+            <i class="bi bi-person  profile-image" 
+            [ngClass]="{'large-icon':!!isAdminUser,'medium-icon':!isAdminUser}"></i>
+          </div>
+          <div class="row" *ngIf="!!isAdminUser">
+            <button class="btn btn-primary" (click)="editUser(member)">Edit</button>
+          </div>
         </span>
       </ng-template>
       <div class="card-body" style="display: block !important;text-align: start;margin: 2rem;">
